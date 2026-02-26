@@ -6,6 +6,8 @@ A super simple FastAPI application that allows students to view and sign up for 
 
 - View all available extracurricular activities
 - Sign up for activities
+- View active school announcements
+- Signed-in teachers can create, edit, and delete announcements
 
 ## Getting Started
 
@@ -31,6 +33,12 @@ A super simple FastAPI application that allows students to view and sign up for 
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Get all activities with their details and current participant count |
 | POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| POST   | `/activities/{activity_name}/unregister?email=student@mergington.edu` | Unregister a student from an activity (requires auth)              |
+| GET    | `/announcements`                                                  | Get active announcements (for banner display)                       |
+| GET    | `/announcements/manage?teacher_username=username`                 | Get all announcements for management (requires auth)                |
+| POST   | `/announcements?teacher_username=username`                        | Create an announcement (requires auth)                              |
+| PUT    | `/announcements/{announcement_id}?teacher_username=username`      | Update an announcement (requires auth)                              |
+| DELETE | `/announcements/{announcement_id}?teacher_username=username`      | Delete an announcement (requires auth)                              |
 
 ## Data Model
 
@@ -47,4 +55,4 @@ The application uses a simple data model with meaningful identifiers:
    - Name
    - Grade level
 
-All data is stored in memory, which means data will be reset when the server restarts.
+Data is stored in MongoDB collections. Initial example records are seeded by `database.py` when collections are empty.
